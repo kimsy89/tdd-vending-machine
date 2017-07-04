@@ -1,0 +1,21 @@
+html {
+  font-size: 14px;
+  font-family: "Open Sans", sans-serif;
+  line-height: 1.4;
+}
+p, h1, h2, h3, h4, h5, h6 {
+  line-height: 1.4;
+}
+button {
+  background: none;
+  border: none;
+}
+a {
+  text-decoration: none;
+  &:hover, &:active, &:focus {
+    text-decoration: none;
+  }
+}
+img {
+  max-width: 100%;
+}

@@ -2,12 +2,62 @@
   <head>
     <meta charset="utf-8"/>
     <title>vending machine</title>
-    <link rel="stylesheet" type="text/css" href="styles/base.css">
+    <link rel="stylesheet" type="text/css" href="styles/app.css">
     <!-- bower:css -->
     <!-- endbower -->
   </head>
   <body>
-    vending machine
+
+    <button type="button" id="btn-rotate">ROTATE</button>
+    
+    <div class="scene-wrap">
+      <div class="scene-main">
+        <aside class="menu__wrap">
+          <ul class="menu">
+            <li class="menu-item">HBO</li>
+            <li class="menu-item">HULU</li>
+            <li class="menu-item menu-item__actived">NETFLIX</li>
+            <li class="menu-item">YOUTUBE</li>
+            <li class="menu-item">APPS</li>
+          </ul>
+        </aside>
+        <section class="contents__wrap">
+          <ul class="contents">
+            <li class="contents-item">
+              <dl class="contents-item__info">
+                <dt class="contents-item__title">HOUSE OF CARD</dt>
+                <dd class="contents-item__sub-title">Season 2, Epi 3</dd>
+              </dl>
+            </li>
+
+            <li class="contents-item">
+              <dl class="contents-item__info">
+                <dt class="contents-item__title">ORANGE IS THE BL...</dt>
+                <dd class="contents-item__sub-title">Season 2, Epi 3</dd>
+              </dl>
+            </li>
+
+            <li class="contents-item">
+              <dl class="contents-item__info">
+                <dt class="contents-item__title">DAREDEVIL</dt>
+                <dd class="contents-item__sub-title">Season 5, Epi 1</dd>
+              </dl>
+            </li>
+
+            <li class="contents-item">
+              <dl class="contents-item__info">
+                <dt class="contents-item__title">MARCO POLO</dt>
+                <dd class="contents-item__sub-title">Season 3, Epi 2</dd>
+              </dl>
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
+    
+
+
+
     
     <!-- bower:js -->
     <script src="../bower_components/jquery/dist/jquery.js"></script>

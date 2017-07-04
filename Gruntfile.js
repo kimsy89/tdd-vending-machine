@@ -9,19 +9,6 @@ module.exports = function(grunt) {
   require('jit-grunt') (grunt);
 
   grunt.initConfig({
-    sass: {
-      dev : {
-        options: {
-          style: 'compressed',
-          sourcemap : true
-        },
-
-        files: {
-          'dist/css/app.min.css': 'src/scss/app.scss'
-        }
-      }
-    },
-
     wiredep: {
       task: {
         src: ['app/index.html']
@@ -187,8 +174,9 @@ module.exports = function(grunt) {
           files: [
             'app/{,*/}*.html',
             'app/styles/{,*/}*.scss',
-            // 'app/images/{,*/}*',
-            'app/scripts/{,*/}*.js'
+            //'app/images/{,*/}*',
+            'app/scripts/{,*/}*.js',
+            '.tmp/styles/{,*/}*.css'
           ],
           port: 9001,
           server: {
