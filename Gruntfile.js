@@ -22,10 +22,42 @@ module.exports = function(grunt) {
       }
     },
 
+    wiredep: {
+      task: {
+        src: ['app/index.html']
+      }
+      // app: {
+      //   src: ['app/index.html'],
+      //   ignorePath: /\.\.\//
+      // },
+      // test: {
+      //   devDependencies: true,
+      //   src: '<%= karma.unit.configFile %>',
+      //   ignorePath:  /\.\.\//,
+      //   fileTypes:{
+      //     coffee: {
+      //       block: /(([\s\t]*)#\s*?bower:\s*?(\S*))(\n|\r|.)*?(#\s*endbower)/gi,
+      //         detect: {
+      //           js: /'(.*\.js)'/gi,
+      //           coffee: /'(.*\.coffee)'/gi
+      //         },
+      //       replace: {
+      //         js: '\'{{filePath}}\'',
+      //         coffee: '\'{{filePath}}\''
+      //       }
+      //     }
+      //     }
+      // },
+      // sass: {
+      //   src: ['app/styles/{,*/}*.{scss,sass}'],
+      //   ignorePath: /(\.\.\/){1,2}bower_components\//
+      // }
+    }, 
+
     babel: {
       options: {
         sourceMap: false,
-        presets: ['es2015']
+        presets: ['babel-preset-es2015']
       },
       dist: {
         files: [{
@@ -33,7 +65,8 @@ module.exports = function(grunt) {
           cwd: 'app/scripts',
           src: '{,*/}*.js',
           dest: '.tmp/scripts',
-          ext: '.js'
+          ext: '.js',
+          extDot: 'last'
         }]
       },
       test: {
@@ -42,7 +75,8 @@ module.exports = function(grunt) {
           cwd: 'test/spec',
           src: '{,*/}*.js',
           dest: '.tmp/spec',
-          ext: '.js'
+          ext: '.js',
+          extDot: 'last'
         }]
       }
     },
@@ -73,6 +107,35 @@ module.exports = function(grunt) {
       }
     },
 
+    // Compiles Sass to CSS and generates necessary files if requested
+    compass: {
+      options: {
+        sassDir: 'app/styles',
+        cssDir: '.tmp/styles',
+        generatedImagesDir: '.tmp/images/generated',
+        imagesDir: 'app/images',
+        javascriptsDir: 'app/scripts',
+        fontsDir: 'app/styles/fonts',
+        //importPath: './bower_components',
+        httpImagesPath: '/images',
+        httpGeneratedImagesPath: '/images/generated',
+        httpFontsPath: '/styles/fonts',
+        relativeAssets: false,
+        assetCacheBuster: false,
+        raw: 'Sass::Script::Number.precision = 10\n'
+      },
+      dist: {
+        options: {
+          generatedImagesDir: 'dist/images/generated'
+        }
+      },
+      server: {
+        options: {
+          sourcemap: true
+        }
+      }
+    },
+
     clean: {
       dist: {
         files: [{
@@ -96,6 +159,21 @@ module.exports = function(grunt) {
       }
     },
 
+    browserify: {
+      dist: {
+        options: {
+          transform: [
+            ['babelify', {
+              //loose: 'all'
+            }]
+          ]
+        },
+        files: {
+          '.tmp/scripts/compiled.js': ['app/scripts/**/*.js']
+        }
+      }
+    },
+
     browserSync: {
       options: {
         notify: false,
@@ -108,7 +186,7 @@ module.exports = function(grunt) {
         options: {
           files: [
             'app/{,*/}*.html',
-            // 'app/styles/{,*/}*.css',
+            'app/styles/{,*/}*.scss',
             // 'app/images/{,*/}*',
             'app/scripts/{,*/}*.js'
           ],
@@ -144,31 +222,21 @@ module.exports = function(grunt) {
     },
 
     watch: {
-      // options: {
-      //   livereload: true
-      // },
-      // js: {
-      //   files: ['app/scripts/**/*.js'],
-      //   tasks: ['jshint']
-      // },
-      // gruntfile: {
-      //   files: ['Gruntfile.js']
-      // },
-      // livereload: {
-      //   options: {
-      //     livereload: true
-      //   },
-      //   files: [
-      //     'app/**/*.html',
-      //     'app/scripts/test.js'
-      //   ]
-      // }
+      scripts: {
+        files: 'app/scripts/**/*.js',
+        tasks: ['browserify']
+      },
+      compass: {
+        files: 'app/styles/**/*.scss',
+        tasks: ['compass:server']
+      }
     }
   });
 
   grunt.registerTask('serve', [
     'clean:server',
-    'babel:dist',
+    'wiredep',
+    'compass:server',
     'browserSync:livereload', 
     'watch'
   ]);
